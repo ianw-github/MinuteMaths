@@ -1,0 +1,61 @@
+{
+  "name": "@trinitymirrordigital/withnail",
+  "version": "1.0.92",
+  "description": "Chameleon ad controller",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docker": "docker pull trinitymirror/chameleon-grunt && docker run -t --rm -u $(id -u) -v $(pwd):/src -w /src trinitymirror/chameleon-grunt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/trinitymirror-ondemand/withnail.git"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "babel-plugin-istanbul": "^4.1.4",
+    "babel-plugin-rewire": "^1.1.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babelify": "^7.3.0",
+    "browserify": "^13.0.0",
+    "browserify-istanbul": "^2.0.0",
+    "chai": "^3.2.0",
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^5.0.0",
+    "grunt-contrib-clean": "^0.7.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jshint": "^0.11.3",
+    "grunt-contrib-pug": "^1.0.0",
+    "grunt-contrib-uglify": "^0.11.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-exorcise": "^2.1.1",
+    "grunt-git": "^0.3.7",
+    "grunt-jscpd": "^0.0.11",
+    "grunt-jsdoc": "^2.1.0",
+    "grunt-karma": "^0.12.0",
+    "grunt-sass": "^2.0.0",
+    "grunt-sass-lint": "0.2.2",
+    "istanbul": "^0.4.5",
+    "jit-grunt": "^0.10.0",
+    "karma": "^1.3.0",
+    "karma-browserify": "^5.1.0",
+    "karma-chrome-launcher": "^2.1.1",
+    "karma-coverage": "^1.1.1",
+    "karma-mocha": "^1.3.0",
+    "karma-sinon-chai": "^1.2.4",
+    "mocha": "^3.0.2",
+    "promise-polyfill": "^7.1.0",
+    "pug-runtime": "^2.0.2",
+    "pugify": "^2.0.1",
+    "sinon": "^1.17.2",
+    "sinon-chai": "^2.8.0",
+    "time-grunt": "^1.3.0"
+  },
+  "dependencies": {
+    "extend": "^3.0.0",
+    "nested-property": "^0.0.7",
+    "array-includes": "^3.0.3",
+    "pug-runtime": "^2.0.2"
+  },
+  "homepage": "https://bitbucket.org/trinitymirror-ondemand/withnail#readme"
+}

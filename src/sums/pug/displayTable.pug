@@ -1,0 +1,15 @@
+
+-var tab=data.table;
+-var tab=data.results;
+- console.log('tab', tab);
+if tab
+    h2.results Results
+    each row,index in data.table
+        - console.log('row', row);
+        div.row
+            span.num1 #{row[0]} x
+            span.num2 #{row[1]} =
+            span.res #{row[2]}
+            if results
+                span #{results[index] ? 'Correct answer' : 'Wrong answer'}
+
