@@ -1,0 +1,24 @@
+-var startFn=data.startFn;
+
+#controls.mm-controls
+    h2.controls-title Select test options and press Go!
+    div
+      label Test time (in seconds)
+        input.countdown-time(type=text, value='6', id='countdown-time')
+    div
+      label Which tables?
+        input.tables(type=text, value='9', id='tables')
+    div
+      label Total questions
+        input.tables(type=text, value='12', id='total-questions')
+    div
+      label Random order (Y/N)?
+        input.randomize(type=text, value='N', id='randomize')
+    div
+        label Plus or Times Tables, number bond (+/x/n)?
+            input.operator(type=text, value='x', id='operator')
+    div
+      label Cols to hide
+        input.cols-to-hide(type=text, value='1,2,3', id='cols-to-hide')
+    div
+      button.start(type=button onclick="mm.start()") Go!

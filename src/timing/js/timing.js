@@ -1,7 +1,9 @@
 /* global console */
+import * as utils from '../../utils/js/utils.js';
 
 /**
  * Returns a Number representing the amount of milliseconds elapsed since a reference instant.
+ *
  * @function getPerformanceTime
  * @private
  * @returns {Number} A TimeStamp, measured in milliseconds
@@ -12,8 +14,10 @@ function getPerformanceTime(){
 
 /**
  *
- * @param el
- * @param duration
+ * Creates a countdown timer
+ *
+ * @param el where to display timer
+ * @param duration  countdown in seconds
  * @returns {HTMLSpanElement}
  */
 export function createTimer(el, duration=30){
@@ -30,33 +34,42 @@ export function createTimer(el, duration=30){
 
 /**
  *
+ * Starts the countdown timer
+ *
  * @param el
  * @param complete
  * @returns {number}
  */
 export function startTimer(el, complete){
 
-  let startTime = getPerformanceTime();
-  let duration = el.dataset.duration;
+  const startTime = getPerformanceTime(),
+    duration = el.dataset.duration,
+    timerGradient = new utils.RedGreenGradient(duration/1000);
+
   el.dataset.startTime = '' + startTime;
-  console.log("startTimer", el);
 
-  let timerId = setInterval(() => {
-    let elapsedTime = getPerformanceTime() - startTime;
-    let count = (duration - elapsedTime)/1000;
-    console.log(`timer: elapsedTime ${elapsedTime} , count ${count}`);
+  const timerId = setInterval(() => {
+    const elapsedTime = getPerformanceTime() - startTime;
+    let count = (duration - elapsedTime)/1000,
+      timerColour;
 
+    //console.log(`timer: elapsedTime ${elapsedTime} , count ${count}`);
     if (count < 0){
       count = 0;
     }
+    timerColour = timerGradient.getStepColour(Math.floor(count)).getColors();
+    console.log("Colour", timerColour);
+
     el.innerText = count.toFixed(2);
+    el.style.background =  `rgb(${timerColour.r},${timerColour.g},${timerColour.b})`;
     if (count === 0 ) {
       clearInterval(timerId);
       complete(el);
     }
-  }, 250);
+  }, 500);
   return timerId;
 }
+
 
 export function resetTimer(el, duration=30){
 

@@ -1,15 +1,15 @@
 
 -var tab=data.table;
--var tab=data.results;
+-var results=data.results;
 - console.log('tab', tab);
+- console.log('results', results);
 if tab
     h2.results Results
     each row,index in data.table
-        - console.log('row', row);
         div.row
-            span.num1 #{row[0]} x
+            span.num1 #{row[0]} #{data.operator || 'x'}
             span.num2 #{row[1]} =
-            span.res #{row[2]}
+            span.res #{row[2]} &nbsp;
             if results
-                span #{results[index] ? 'Correct answer' : 'Wrong answer'}
+                span #{results[index] ? '\u2713 Correct' : '\u274c Wrong'} answer
 

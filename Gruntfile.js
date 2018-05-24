@@ -34,6 +34,7 @@ module.exports = function(grunt) {
       options: {
         process: function (content) {
           return content + '\ntry{module.exports = template;}catch(e){}';
+          //return content + '\nexport default template';
         }
       }
     }
