@@ -70,8 +70,15 @@ function getInputValues(el){
   let inputs = el.querySelectorAll('input');
 
   for (let i = 0; i < inputs.length; i++){
-    values[inputs[i].id] = inputs[i].value;
+    if (inputs[i].type === 'text') {
+      values[inputs[i].name] = inputs[i].value;
+    } else {
+      if (inputs[i].checked){
+        values[inputs[i].name] = inputs[i].value;
+      }
+    }
   }
+  console.log("Input values", values);
   return values;
 }
 

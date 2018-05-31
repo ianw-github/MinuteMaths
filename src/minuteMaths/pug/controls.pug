@@ -4,21 +4,28 @@
     h2.controls-title Select test options and press Go!
     div
       label Test time (in seconds)
-        input.countdown-time(type=text, value='6', id='countdown-time')
+        input.countdown-time(type=text, value='6', name='countdown-time', id='countdown-time')
     div
       label Which tables?
-        input.tables(type=text, value='9', id='tables')
+        input.tables(type=text, value='9', name='tables', id='tables')
     div
       label Total questions
-        input.tables(type=text, value='12', id='total-questions')
+        input.total-questions(type=text, value='12', name='total-questions', id='total-questions')
     div
-      label Random order (Y/N)?
-        input.randomize(type=text, value='N', id='randomize')
+      label Order
+        input.randomize(type='radio', value='N', name='randomize', id='randomizeNo' checked='true')
+        span.radio In order
+        input.randomize(type='radio', value='Y', name='randomize', id='randomizeYes')
+        span.radio Random
     div
-        label Plus or Times Tables, number bond (+/x/n)?
-            input.operator(type=text, value='x', id='operator')
+        label Type of test
+        input.operator(type=radio, value='x', name='operator', id='operator-times')
+        input.operator(type=radio, value='+', name='operator', id='operator-plus')
+        input.operator(type=radio, value='n', name='operator', id='operator-bond')
     div
       label Cols to hide
-        input.cols-to-hide(type=text, value='1,2,3', id='cols-to-hide')
+        input.cols-to-hide(type=checkbox, value='1', name='cols-to-hide', id='cols-to-hide1')
+        input.cols-to-hide(type=checkbox, value='2', name='cols-to-hide', id='cols-to-hide2')
+        input.cols-to-hide(type=checkbox, value='3', name='cols-to-hide', id='cols-to-hide3'  checked='true')
     div
       button.start(type=button onclick="mm.start()") Go!
