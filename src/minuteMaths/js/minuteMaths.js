@@ -12,6 +12,12 @@ let template = require('../../../target/tmp/minuteMaths/pug/controls.pug.js');
  */
 function timerComplete(el, table, operator){
   tables.display(el, table, operator);
+  tables.getResults(table)
+    .forEach((val, idx) => {
+      console.log(`ANS[${idx}]=${val}`);
+      document.getElementById(`question-${idx}-${val?'':'in'}correct`)
+        .classList.remove('hidden');
+    });
 }
 
 /**
@@ -44,19 +50,6 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-/**
- * Display the test controls
- *
- * @param el - parent container element
- */
-export function displayControls(el){
-
-  try {
-    el.innerHTML = template({data: {startFn: start}});
-  } catch (e) {
-    console.log(e);
-  }
-}
 
 /**
  * Get values from input elements
@@ -72,6 +65,11 @@ function getInputValues(el){
   for (let i = 0; i < inputs.length; i++){
     if (inputs[i].type === 'text') {
       values[inputs[i].name] = inputs[i].value;
+    } else if (inputs[i].type === 'checkbox') {
+      if (inputs[i].checked){
+        values[inputs[i].name] = values[inputs[i].name] || [];
+        values[inputs[i].name].push(inputs[i].value);
+      }
     } else {
       if (inputs[i].checked){
         values[inputs[i].name] = inputs[i].value;
@@ -127,6 +125,7 @@ function generateQuestions(table, colsToHide) {
   return questions;
 }
 
+
 /**
  *
  */
@@ -134,10 +133,11 @@ function start(){
 
   let table;
   reset();
+
   let values = getInputValues(document.querySelector('#controls'));
   const timer = timing.createTimer(document.querySelector('#timer'), Number(values['countdown-time']) || 30);
 
-  let numbers = values.tables.split(',').map((num => Number(num)));
+  let numbers = values.tables.map((num => Number(num)));
 
   table = tables.generateTable(values.operator, numbers, 12);
   if (values.randomize.toUpperCase() === 'Y') {
@@ -145,13 +145,33 @@ function start(){
   }
   table.splice(values['total-questions'] || 12);
 
-  let questions = generateQuestions(table, values['cols-to-hide'].split(','));
+  let questions = generateQuestions(table, values['cols-to-hide']);
 
   tables.displayForm(document.querySelector('#minuteMaths'), questions, values.operator);
 
   timing.startTimer(timer, () => {
     timerComplete(document.querySelector('#results'), table, values.operator);
   });
+
+  window.mm.stop = function(){
+    console.log("stopping timer: ", document.querySelector('#timer > span'));
+    timing.stopTimer(document.querySelector('#timer > span'));
+    timerComplete(document.querySelector('#results'), table, values.operator);
+  };
+}
+
+/**
+ * Display the test controls
+ *
+ * @param el - parent container element
+ */
+export function displayControls(el){
+
+  try {
+    el.innerHTML = template({data: {startFn: start, minTable: 1, maxTable: 12}});
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 /**

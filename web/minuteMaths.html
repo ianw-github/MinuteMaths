@@ -1,42 +1,61 @@
 <html>
   <head>
+      <!-- Minute Maths v1.0 -->
     <title>Minute Maths Maestros</title>
     <style>
       body {
         font-family: Ariel,sans-serif;
         font-size: 1.5em;
-        background: lightsteelblue;
+        background: royalblue;
       }
       h1 {
         color: tomato;
         font-size: 3em;
       }
       #controls input {
-          margin: 0 8px 0 8px;
+          margin: 0 8px 0 18px;
       }
       #controls input[type=text] {
-          width: 50px;
+        width: 50px;
+      }
+      #controls button {
+        font-size: 1.5em;
+        border-width: medium;
       }
       #controls {
-        background: royalblue;
+        background: lightsteelblue;
         padding: 16px
-
+        align: center:
         margin-bottom: 10px;
       }
       #timer {
-        background: royalblue;
+        background: lightsteelblue;
         padding: 16px;
         margin-bottom: 10px;
       }
       #minuteMaths {
-        background: royalblue;
+        background: lightsteelblue;
         padding: 16px;
         margin-bottom: 10px;
       }
+      #minuteMaths input[type="text"]
+      {
+        font-size:1.2em;
+        width: 2em;
+        margin: 0.5em;
+      }
+      #minuteMaths span
+      {
+        font-size:1.2em;
+        margin: 0.5em;
+      }
       #results {
-        background: royalblue;
+        background: lightsteelblue;
         padding: 16px;
         margin-bottom: 10px;
+      }
+      .hidden {
+        display: none
       }
     </style>
   </head>
@@ -50,6 +69,6 @@
     </section>
     <section id="results">
     </section>
-    <script src="../target/build/minuteMaths/js/minuteMaths.min.js"></script>
+    <script src="js/minuteMaths.min.js"></script>
   </body>
 </html>

@@ -15,7 +15,10 @@ module.exports = function(grunt) {
     "build": "target/build",
     "tmp": "target/tmp",
     "src": "src",
-    "reports": "target/reports"
+    "reports": "target/reports",
+    "web": "web",
+    "dist": "target/dist",
+    "distjs": "target/dist/js"
   };
 
   taskConfig.clean = {
@@ -26,19 +29,33 @@ module.exports = function(grunt) {
 
   // templates copy
   taskConfig.copy = {
-    libs : {
-      files : [{ cwd: dirs.src, src: ['lib/**/*.*'], dest: dirs.build, expand: true}]
+    libs: {
+      files: [{cwd: dirs.src, src: ['lib/**/*.*'], dest: dirs.build, expand: true}]
     },
     templates: {
-      files : [{ cwd: dirs.tmp, src: ['**/pug/*.js'], dest: dirs.tmp, expand: true}],
+      files: [{cwd: dirs.tmp, src: ['**/pug/*.js'], dest: dirs.tmp, expand: true}],
       options: {
         process: function (content) {
           return content + '\ntry{module.exports = template;}catch(e){}';
           //return content + '\nexport default template';
         }
       }
+    },
+    web: {
+      files : [{ cwd: dirs.web,
+        src: ['**/*.html'],
+        dest: dirs.dist,
+        rename: function(dest, src){
+            return dest + '/' +src.replace('minuteMaths.html', 'index.html');
+          },
+        expand: true}]
+    },
+    scripts: {
+      files: [{cwd: dirs.target, src: ['**/minuteMaths.min.js'], dest: dirs.distjs, flatten:true, expand: true}]
     }
   };
+
+
 
   // TEMPLATES
   taskConfig.pug = {
@@ -267,10 +284,11 @@ module.exports = function(grunt) {
 
   grunt.initConfig(taskConfig);
 
-  grunt.registerTask('templates', ['pug','copy','uglify:pug']);
+  grunt.registerTask('templates', ['pug','copy:templates','uglify:pug']);
   grunt.registerTask('css', ['sasslint', 'sass']);
   grunt.registerTask('test',['jshint','karma','jscpd']);
   grunt.registerTask('js',['browserify:js','exorcise','uglify:js']);
   grunt.registerTask('jsdev',['browserify:jsdev']);
-  grunt.registerTask('default', ['clean','templates','test','css','js', 'jsdoc']);
+  grunt.registerTask('dist', ['copy:web','copy:scripts']);
+  grunt.registerTask('default', ['clean','templates','test','css','js', 'jsdoc','dist']);
 };

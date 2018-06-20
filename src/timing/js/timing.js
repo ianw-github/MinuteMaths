@@ -31,6 +31,11 @@ export function createTimer(el, duration=30){
   return counter;
 }
 
+export function stopTimer(el){
+  const timerId= Number(el.dataset['timerid']);
+  console.log("timerId", timerId, el);
+  clearInterval(timerId);
+}
 
 /**
  *
@@ -67,6 +72,8 @@ export function startTimer(el, complete){
       complete(el);
     }
   }, 500);
+  el.dataset['timerid'] = timerId;
+  console.log("timerId", timerId);
   return timerId;
 }
 

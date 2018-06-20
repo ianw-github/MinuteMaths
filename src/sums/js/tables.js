@@ -10,33 +10,56 @@ window.pug = pug;
 /**
  * Adds equality method to Array prototype
  */
-function createArrayIsEqualTo(){
+// function createArrayIsEqualTo(){
+//
+//   Array.prototype.isEqualTo = function(array){
+//     if (!array) {
+//       return false;
+//     }
+//
+//     if (this.length !== array.length) {
+//       return false;
+//     }
+//
+//     for (let i = 0; i < this.length; i++){
+//       if (this[i] instanceof Array && array[i] instanceof Array){
+//         if (!this[i].isEqualTo(array[i])) {
+//           return false;
+//         }
+//       } else {
+//         if (this[i] !== array[i]){
+//           return false;
+//         }
+//       }
+//     }
+//     return true;
+//   };
+//   Object.defineProperty(Array.prototype, "isEqualTo", {enumerable: false});
+// }
 
-  Array.prototype.isEqualTo = function(array){
-    if (!array) {
-      return false;
-    }
+function arrayIsEqualTo(array1, array2){
 
-    if (this.length !== array.length) {
-      return false;
-    }
+  if (!array1 || !array2) {
+    return false;
+  }
 
-    for (let i = 0; i < this.length; i++){
-      if (this[i] instanceof Array && array[i] instanceof Array){
-        if (!this[i].isEqualTo(array[i])) {
-          return false;
-        }
-      } else {
-        if (this[i] !== array[i]){
-          return false;
-        }
+  if (array1.length !== array2.length) {
+    return false;
+  }
+
+  for (let i = 0; i < array1.length; i++){
+    if (array1[i] instanceof Array && array2[i] instanceof Array){
+      if (!arrayIsEqualTo(array1[i], array2[i])) {
+        return false;
+      }
+    } else {
+      if (array1[i] !== array2[i]){
+        return false;
       }
     }
+  }
     return true;
-  };
-  Object.defineProperty(Array.prototype, "isEqualTo", {enumerable: false});
 }
-
 
 /**
  *
@@ -103,7 +126,7 @@ function generateNumberBondsTable(numbers){
  * @param count
  * @returns {Array}
  */
-export function generateTable(operator = 'x', numbers, count=12){
+export function generateTable(operator = 'x', numbers = [2,3,4,5,6,7,8,9,10,11,12], count=12){
 
   if (operator === '+'){
     return generateAdditionTable(numbers, count);
@@ -114,18 +137,18 @@ export function generateTable(operator = 'x', numbers, count=12){
   return generateTimesTable(numbers, count);
 }
 
-/**
- *
- * @param el
- * @returns {*}
- */
-function getNumberFromInput(el){
-  let num;
 
-  if (el) {
-    num = Number(el.value);
+/**
+ * Gets a value from HTML element - eithe value of input element or data-value attribute for other elements
+ * @param el
+ * @returns {number}
+ */
+function getNumberFromElement(el){
+  if (el.tagName.toLowerCase() === 'input'){
+    return Number(el.value);
+  } else {
+    return Number(el.dataset.value);
   }
-  return num;
 }
 
 /**
@@ -137,24 +160,17 @@ function getAnswer(questionIndex){
 
   const el = document.getElementById(`question-${questionIndex}`);
   let answers = [];
-  let inputs = el.getElementsByTagName('input');
 
-  for (let i = 0; i < inputs.length; i++){
-    answers.push(getNumberFromInput(inputs[i]));
-  }
-  return answers; //inputs.map((el) => el.value);
+  ['num1', 'num2','res'].forEach(colName => {
+    let col = el.querySelector('[name=' + colName);
+    if (col) {
+      answers.push(getNumberFromElement(col));
+    }
+  });
+
+  return answers;
 }
 
-/**
- *
- * @param userSum
- * @param generatedSum
- * @returns {boolean}
- */
-export function checkResult(userSum, generatedSum){
-
-  return userSum.isEqualTo(generatedSum);
-}
 
 /**
  *
@@ -167,8 +183,24 @@ function getAnswers(table){
     answers.push(getAnswer(i));
   }
 
+  console.log("answers", answers);
   return answers;
 }
+
+
+/**
+ * Gets an array of true/false results for question answers
+ *
+ * @param table - table for which answers given
+ * @returns {boolean[]} true(correct)/false(incorrect) for ech answer
+ */
+export function getResults(table){
+  return getAnswers(table)
+    .map((ans, idx) => {
+      return arrayIsEqualTo(ans, table[idx]);
+    });
+}
+
 
 /**
  *
@@ -177,14 +209,14 @@ function getAnswers(table){
  */
 export function display(el, table, operator){
 
-  let answers = getAnswers(table);
-  let results = answers.map((ans, idx) => {
-    return ans.isEqualTo(table[idx]);
-  });
+  // let answers = getAnswers(table);
+  // let results = answers.map((ans, idx) => {
+  //   return arrayIsEqualTo(ans, table[idx]);
+  // });
   el.innerHTML = template(
     {data: {
       table: table,
-        results: results,
+        results: getResults(table),
         operator: (operator === 'n') ? '+' : operator}
     });
 }
@@ -196,7 +228,6 @@ export function display(el, table, operator){
  */
 export function displayForm(el, table, operator){
 
-  //console.log(df);
   try {
     el.innerHTML = formTemplate(
       {data: {
@@ -208,4 +239,4 @@ export function displayForm(el, table, operator){
   }
 }
 
-createArrayIsEqualTo();
+//createArrayIsEqualTo();

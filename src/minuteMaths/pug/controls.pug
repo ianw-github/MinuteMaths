@@ -1,13 +1,23 @@
--var startFn=data.startFn;
+-var minTable=data.minTable;
+-var maxTable=data.maxTable;
+-var tab = minTable;
+-var checked = 'false';
 
 #controls.mm-controls
     h2.controls-title Select test options and press Go!
     div
       label Test time (in seconds)
-        input.countdown-time(type=text, value='6', name='countdown-time', id='countdown-time')
+        input.countdown-time(type=text, value='120', name='countdown-time', id='countdown-time')
     div
       label Which tables?
-        input.tables(type=text, value='9', name='tables', id='tables')
+        while tab <= maxTable
+          if (tab === 7)
+            -  checked = true
+          else
+            -  checked = false
+          input.tables(type='checkbox', value=tab, name='tables', id='tables-'+tab, checked=checked)
+          span.tables #{tab}
+          - tab = tab + 1;
     div
       label Total questions
         input.total-questions(type=text, value='12', name='total-questions', id='total-questions')
@@ -19,13 +29,25 @@
         span.radio Random
     div
         label Type of test
-        input.operator(type=radio, value='x', name='operator', id='operator-times')
-        input.operator(type=radio, value='+', name='operator', id='operator-plus')
-        input.operator(type=radio, value='n', name='operator', id='operator-bond')
+        input.operator(type='radio', value='x', name='operator', id='operator-times' checked='true')
+        span.radio Times Tables
+        input.operator(type='radio', value='+', name='operator', id='operator-plus')
+        span.radio Addition
+        input.operator(type='radio', value='x', name='operator', id='operator-divide')
+        span.radio Division Tables
+        input.operator(type='radio', value='+', name='operator', id='operator-times')
+        span.radio Subtraction
+        input.operator(type='radio', value='n', name='operator', id='operator-bond')
+        span.radio Number Bonds
     div
       label Cols to hide
-        input.cols-to-hide(type=checkbox, value='1', name='cols-to-hide', id='cols-to-hide1')
-        input.cols-to-hide(type=checkbox, value='2', name='cols-to-hide', id='cols-to-hide2')
-        input.cols-to-hide(type=checkbox, value='3', name='cols-to-hide', id='cols-to-hide3'  checked='true')
+      //input.cols-to-hide(type='text', value='1', name='cols-to-hide', id='cols-to-hide1')
+      input.cols-to-hide(type='checkbox', value='1', name='cols-to-hide', id='cols-to-hide1' checked='true')
+      span.radio First
+      input.cols-to-hide(type='checkbox', value='2', name='cols-to-hide', id='cols-to-hide2' checked='true')
+      span.radio Second
+      input.cols-to-hide(type='checkbox', value='3', name='cols-to-hide', id='cols-to-hide3' checked='true')
+      span.radio Result
     div
       button.start(type=button onclick="mm.start()") Go!
+      button.stop(type=button onclick="mm.stop()") I'm Finished
