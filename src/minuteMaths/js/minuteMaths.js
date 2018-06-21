@@ -11,7 +11,7 @@ let template = require('../../../target/tmp/minuteMaths/pug/controls.pug.js');
  * @param table
  */
 function timerComplete(el, table, operator){
-  tables.display(el, table, operator);
+  //tables.display(el, table, operator);
   tables.getResults(table)
     .forEach((val, idx) => {
       console.log(`ANS[${idx}]=${val}`);
@@ -147,7 +147,7 @@ function start(){
 
   let questions = generateQuestions(table, values['cols-to-hide']);
 
-  tables.displayForm(document.querySelector('#minuteMaths'), questions, values.operator);
+  tables.displayForm(document.querySelector('#minuteMaths'), questions, values.operator, table);
 
   timing.startTimer(timer, () => {
     timerComplete(document.querySelector('#results'), table, values.operator);

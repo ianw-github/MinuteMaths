@@ -53,7 +53,7 @@ function ColourGradient(_startColour, _endColour, _steps){
     const g = interpolate(startColors.g, endColors.g, steps, val);
     const b = interpolate(startColors.b, endColors.b, steps, val);
 
-    console.log("steps, val", steps, val);
+    //console.log("steps, val", steps, val);
     return new Color(r,g,b);
   };
 }

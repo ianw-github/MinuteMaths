@@ -162,7 +162,7 @@ function getAnswer(questionIndex){
   let answers = [];
 
   ['num1', 'num2','res'].forEach(colName => {
-    let col = el.querySelector('[name=' + colName);
+    let col = el.querySelector('[name=' + colName+']');
     if (col) {
       answers.push(getNumberFromElement(col));
     }
@@ -226,14 +226,17 @@ export function display(el, table, operator){
  * @param el
  * @param table
  */
-export function displayForm(el, table, operator){
+export function displayForm(el, questions, operator, table){
 
+  const data = {data: {
+      table: table,
+      operator: (operator === 'n') ? '+' : operator,
+    questions: questions}
+  };
+
+  console.log("data", data);
   try {
-    el.innerHTML = formTemplate(
-      {data: {
-        table: table,
-        operator: (operator === 'n') ? '+' : operator}
-      });
+    el.innerHTML = formTemplate(data);
   } catch (e) {
     console.log(e);
   }

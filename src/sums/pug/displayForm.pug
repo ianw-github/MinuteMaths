@@ -1,9 +1,13 @@
 
--var tab=data.table;
-if tab
+-var questions=data.questions;
+-var table=data.table;
+-var operator = data.operator;
+-var answer = [];
+if questions
     h2.test Enter missing values
     form
-    each row,index in data.table
+    each row,index in questions
+        -answer = table[index];
         div.row(id='question-'+index, class="row-"+index)
             if row[0] !==''
                 span.num1(data-value=''+row[0], name='num1') #{row[0]}
@@ -20,5 +24,5 @@ if tab
             else
                 input.res(type='text', name='res', value='' + row[2], id='q'+index+'-3')
             span.correct.hidden(id='question-'+index+'-correct') #{'\u2713'} Correct answer
-            span.incorrect.hidden(id='question-'+index+'-incorrect') #{'\u274c'} Wrong answer
+            span.incorrect.hidden(id='question-'+index+'-incorrect') #{'\u274c'} Wrong answer - #{answer[0] + operator + answer[1] + '=' + answer[2]}
 
