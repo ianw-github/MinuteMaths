@@ -6,8 +6,15 @@
 #controls.mm-controls
     h2.controls-title Select test options and press Go!
     div
-      label Test time (in seconds)
-        input.countdown-time(type=text, value='120', name='countdown-time', id='countdown-time')
+      label Test time
+          select(name='countdown-time')
+            option(value='30') 30 seconds
+            option(value='60') 1 minute
+            option(value='90') 90 seconds
+            option(value='120' selected='selected') 2 minutes
+            option(value='150') 2.5 minutes
+            option(value='180') 3 minutes
+    //input.countdown-time(type=text, value='120', name='countdown-time', id='countdown-time')
     div
       label Which tables?
         while tab <= maxTable
@@ -21,24 +28,25 @@
     div
       label Total questions
         input.total-questions(type=text, value='12', name='total-questions', id='total-questions')
+    //div
+    //  label Order
+    //    input.randomize(type='radio', value='N', name='randomize', id='randomizeNo' checked='true')
+    //    span.radio In order
+    //    input.randomize(type='radio', value='Y', name='randomize', id='randomizeYes')
+    //    span.radio
     div
-      label Order
-        input.randomize(type='radio', value='N', name='randomize', id='randomizeNo' checked='true')
-        span.radio In order
-        input.randomize(type='radio', value='Y', name='randomize', id='randomizeYes')
-        span.radio Random
+        label Order
+        select(name='randomorder')
+            option(value='N', id='randomizeNo') In order
+            option(value='Y', id='randomizeYes' selected='selected') Random order
     div
         label Type of test
-        input.operator(type='radio', value='x', name='operator', id='operator-times' checked='true')
-        span.radio Times Tables
-        input.operator(type='radio', value='+', name='operator', id='operator-plus')
-        span.radio Addition
-        input.operator(type='radio', value='x', name='operator', id='operator-divide')
-        span.radio Division Tables
-        input.operator(type='radio', value='+', name='operator', id='operator-times')
-        span.radio Subtraction
-        input.operator(type='radio', value='n', name='operator', id='operator-bond')
-        span.radio Number Bonds
+        select(name='operator')
+            option(value='x', id='operator-times' selected='selected') Times tables
+            option(value='+', id='operator-addition') Addition tables
+            //option(value='+', id='operator-divide') Division
+            //option(value='+', id='operator-times') Subtraction
+            option(value='n', id='operator-bond') Number Bonds
     div
       label Cols to hide
       //input.cols-to-hide(type='text', value='1', name='cols-to-hide', id='cols-to-hide1')

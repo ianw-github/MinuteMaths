@@ -6,7 +6,11 @@ const expect = chai.expect;
 
 describe("timing", () => {
 
-  it("should create a timer",() => {
-    expect(timing.createTimer(undefined, 30)).to.be.true;
+  it("should create a timer with the specified duration",() => {
+    const container = timing.createTimer(document.createElement('div'), 30, 'myTimer');
+    expect(container).to.be.ok;
+    expect(container.id).to.equal('myTimer');
+    expect(container.innerText).to.equal('30');
+    expect(container.dataset.duration).to.equal('30000');
   });
 });

@@ -1,4 +1,9 @@
-/*global console */
+/**
+ * Utilities
+ *
+ * @module
+ */
+
 
 function interpolate(start, end, steps, count) {
   // let s = start,

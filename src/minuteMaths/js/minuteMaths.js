@@ -11,6 +11,7 @@ let template = require('../../../target/tmp/minuteMaths/pug/controls.pug.js');
  * @param table
  */
 function timerComplete(el, table, operator){
+  console.log(operator);
   //tables.display(el, table, operator);
   tables.getResults(table)
     .forEach((val, idx) => {
@@ -76,6 +77,13 @@ function getInputValues(el){
       }
     }
   }
+
+  let selects = el.querySelectorAll('select');
+
+  for (let i = 0; i < selects.length; i++){
+      values[selects[i].name] = selects[i].value;
+  }
+
   console.log("Input values", values);
   return values;
 }
@@ -140,7 +148,7 @@ function start(){
   let numbers = values.tables.map((num => Number(num)));
 
   table = tables.generateTable(values.operator, numbers, 12);
-  if (values.randomize.toUpperCase() === 'Y') {
+  if (values.randomorder.toUpperCase() === 'Y') {
     shuffle(table);
   }
   table.splice(values['total-questions'] || 12);

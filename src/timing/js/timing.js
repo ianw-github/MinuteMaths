@@ -20,19 +20,19 @@ function getPerformanceTime(){
  * @param duration  countdown in seconds
  * @returns {HTMLSpanElement}
  */
-export function createTimer(el, duration=30){
+export function createTimer(el, duration=30, name='countDown'){
 
   let counter = document.createElement('span');
-  counter.id = 'countDown';
+  counter.id = name;
   counter.innerText = duration;
   counter.dataset.duration = duration * 1000;
   el.appendChild(counter);
-  console.log("createTimer", el, duration);
+  console.log("createTimer", name, el, duration);
   return counter;
 }
 
 export function stopTimer(el){
-  const timerId= Number(el.dataset['timerid']);
+  const timerId= Number(el.dataset.timerid);
   console.log("timerId", timerId, el);
   clearInterval(timerId);
 }
@@ -72,7 +72,7 @@ export function startTimer(el, complete){
       complete(el);
     }
   }, 500);
-  el.dataset['timerid'] = timerId;
+  el.dataset.timerid = timerId;
   console.log("timerId", timerId);
   return timerId;
 }
