@@ -16,7 +16,7 @@ Run it locally:
 
 ### Contribution guidelines ###
 
-PR, as normal. Must be approved by Ian
+Create a feature branch, then Pull Request. Must be approved by Ian
 
 ### Who do I talk to? ###
 

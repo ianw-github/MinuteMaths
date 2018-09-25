@@ -168,6 +168,23 @@ function start(){
   };
 }
 
+function selectAllTables(selected = true){
+
+  const els = document.querySelectorAll('#tables-list input.tables');
+  els.forEach(el => {
+    el.checked = selected;
+  });
+}
+
+function selectNoTables(){
+
+  const els = document.querySelectorAll('#tables-list input.tables');
+  els.forEach(el => {
+    el.checked = false;
+  });
+}
+
+
 /**
  * Display the test controls
  *
@@ -189,7 +206,11 @@ function init(){
 
   displayControls(document.querySelector('#controls'));
 
-  window.mm = {start: start};
+  window.mm = {
+    start: start,
+    selectAllTables: selectAllTables,
+    selectNoTables: selectNoTables,
+  };
 }
 
 init();

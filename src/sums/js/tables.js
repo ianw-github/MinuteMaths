@@ -103,6 +103,44 @@ function generateAdditionTable(numbers, count=12){
 /**
  *
  * @param numbers
+ * @param count
+ * @returns {Array}
+ */
+function generateSubtractionTable(numbers, count=12){
+
+  let table = [];
+
+  numbers.forEach((number) => {
+    for(let i = 1; i <= count; i++){
+      table.push([i + number, number, i]);
+    }
+  });
+
+  return table;
+}
+
+/**
+ *
+ * @param numbers
+ * @param count
+ * @returns {Array}
+ */
+function generateDivisionTable(numbers, count=12){
+
+  let table = [];
+
+  numbers.forEach((number) => {
+    for(let i = 1; i <= count; i++){
+      table.push([i * number, number, i]);
+    }
+  });
+
+  return table;
+}
+
+/**
+ *
+ * @param numbers
  * @returns {Array}
  */
 function generateNumberBondsTable(numbers){
@@ -128,13 +166,25 @@ function generateNumberBondsTable(numbers){
  */
 export function generateTable(operator = 'x', numbers = [2,3,4,5,6,7,8,9,10,11,12], count=12){
 
-  if (operator === '+'){
-    return generateAdditionTable(numbers, count);
-  } else if (operator.toLowerCase() === 'n'){
-    return generateNumberBondsTable(numbers);
+  switch (operator){
+    case '+': return generateAdditionTable(numbers, count);
+    case '-': return generateSubtractionTable(numbers, count);
+    case 'x': return generateTimesTable(numbers, count);
+    case '/': return generateDivisionTable(numbers, count);
+    case 'n': return generateNumberBondsTable(numbers);
+    default: return generateTimesTable(numbers, count);
   }
-
-  return generateTimesTable(numbers, count);
+  // if (operator === '+'){
+  //   return generateAdditionTable(numbers, count);
+  // } else if (operator.toLowerCase() === 'n'){
+  //   return generateNumberBondsTable(numbers);
+  // } else if (operator.toLowerCase() === '-'){
+  //   return generateSubtractionTable(numbers, count);
+  // } else if (operator.toLowerCase() === '/'){
+  //   return generateDivisionTable(numbers, count);
+  // }
+  //
+  // return generateTimesTable(numbers, count);
 }
 
 

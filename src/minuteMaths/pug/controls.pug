@@ -6,25 +6,39 @@
 #controls.mm-controls
     h2.controls-title Select test options and press Go!
     div
-      label Test time
-          select(name='countdown-time')
-            option(value='30') 30 seconds
-            option(value='60') 1 minute
-            option(value='90') 90 seconds
-            option(value='120' selected='selected') 2 minutes
-            option(value='150') 2.5 minutes
-            option(value='180') 3 minutes
-    //input.countdown-time(type=text, value='120', name='countdown-time', id='countdown-time')
+      label Type of test
+      select(name='operator')
+        option(value='x', id='operator-times' selected='selected') Times tables
+        option(value='+', id='operator-addition') Addition tables
+        option(value='-', id='operator-subtraction') Subtraction tables
+        option(value='/', id='operator-divide') Division tables
+        option(value='n', id='operator-bond') Number Bonds
     div
+      label Test time
+      select(name='countdown-time')
+        option(value='30') 30 seconds
+        option(value='60') 1 minute
+        option(value='90') 90 seconds
+        option(value='120' selected='selected') 2 minutes
+        option(value='150') 2.5 minutes
+        option(value='180') 3 minutes
+        option(value='210') 3.5 minutes
+        option(value='240') 4 minutes
+        option(value='270') 4.5 minutes
+        option(value='200') 5 minutes
+    //input.countdown-time(type=text, value='120', name='countdown-time', id='countdown-time')
+    div(id='tables-list')
       label Which tables?
-        while tab <= maxTable
-          if (tab === 7)
-            -  checked = true
-          else
-            -  checked = false
-          input.tables(type='checkbox', value=tab, name='tables', id='tables-'+tab, checked=checked)
-          span.tables #{tab}
-          - tab = tab + 1;
+      while tab <= maxTable
+        if (tab === 7)
+          -  checked = true
+        else
+          -  checked = false
+        input.tables(type='checkbox', value=tab, name='tables', id='tables-'+tab, checked=checked)
+        span.tables #{tab}
+        - tab = tab + 1;
+      button.all-tables(type=button onclick="mm.selectAllTables(true)") All
+      button.no-tables(type=button onclick="mm.selectAllTables(false)") None
     div
       label Total questions
         input.total-questions(type=text, value='12', name='total-questions', id='total-questions')
@@ -35,18 +49,10 @@
     //    input.randomize(type='radio', value='Y', name='randomize', id='randomizeYes')
     //    span.radio
     div
-        label Order
-        select(name='randomorder')
-            option(value='N', id='randomizeNo') In order
-            option(value='Y', id='randomizeYes' selected='selected') Random order
-    div
-        label Type of test
-        select(name='operator')
-            option(value='x', id='operator-times' selected='selected') Times tables
-            option(value='+', id='operator-addition') Addition tables
-            //option(value='+', id='operator-divide') Division
-            //option(value='+', id='operator-times') Subtraction
-            option(value='n', id='operator-bond') Number Bonds
+      label Order
+      select(name='randomorder')
+        option(value='N', id='randomizeNo') In order
+        option(value='Y', id='randomizeYes' selected='selected') Random order
     div
       label Cols to hide
       //input.cols-to-hide(type='text', value='1', name='cols-to-hide', id='cols-to-hide1')

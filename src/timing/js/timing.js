@@ -12,6 +12,16 @@ function getPerformanceTime(){
   return window.performance ? window.performance.now() : Date.now();
 }
 
+function updateTimer(el, remainingTime, totalTime){
+
+  const remaining = remainingTime.toFixed(0),
+    total = totalTime.toFixed(0).toLowerCase(),
+    used = (total - remaining).toFixed(0);
+
+  //console.log("remaining, total ",remaining, total);
+  el.innerText = remaining + ' left of ' + total + ' seconds. ' + used + ' used.' ;
+}
+
 /**
  *
  * Creates a countdown timer
@@ -24,9 +34,9 @@ export function createTimer(el, duration=30, name='countDown'){
 
   let counter = document.createElement('span');
   counter.id = name;
-  counter.innerText = duration;
   counter.dataset.duration = duration * 1000;
   el.appendChild(counter);
+  updateTimer(counter, 0, duration);
   console.log("createTimer", name, el, duration);
   return counter;
 }
@@ -36,6 +46,9 @@ export function stopTimer(el){
   console.log("timerId", timerId, el);
   clearInterval(timerId);
 }
+
+
+
 
 /**
  *
@@ -63,9 +76,10 @@ export function startTimer(el, complete){
       count = 0;
     }
     timerColour = timerGradient.getStepColour(Math.floor(count)).getColors();
-    console.log("Colour", timerColour);
+    //console.log("Colour", timerColour);
 
-    el.innerText = count.toFixed(2);
+    updateTimer(el, count, duration/1000);
+    //el.innerText = count.toFixed(2);
     el.style.background =  `rgb(${timerColour.r},${timerColour.g},${timerColour.b})`;
     if (count === 0 ) {
       clearInterval(timerId);
@@ -73,7 +87,7 @@ export function startTimer(el, complete){
     }
   }, 500);
   el.dataset.timerid = timerId;
-  console.log("timerId", timerId);
+  //console.log("timerId", timerId);
   return timerId;
 }
 
